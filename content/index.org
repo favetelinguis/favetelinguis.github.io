@@ -1,0 +1,6 @@
+#+title: Henke Larsson AB
+
+* Hello
+* Smoj
+
+Here is a [[./emacs.org][link]]

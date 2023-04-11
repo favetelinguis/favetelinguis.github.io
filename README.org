@@ -1,0 +1,4 @@
+* The static site of henkelarsson.se made from org-mode
+
+** Generate site
+Build using ~./build.sh~
