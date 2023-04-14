@@ -1,7 +1,10 @@
 #+title: Henke Larsson AB
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-bigblow.setup
 
-* How to setup a minor mode for my custom CLI wrapper
+* About
+** We are a consultancy company that *loves* to build software, your can contact us at =t1 at henkelarsson dot se=.
+* Wiki
+** How to setup a minor mode for my custom CLI wrapper
 Making an optimal workflow by wrapping common CLI tools in a transient.
 #+begin_src emacs-lisp
 ;; Example what args will look like ("--switch" "--text=WHAT is this text")
