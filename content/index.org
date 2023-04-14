@@ -1,8 +1,76 @@
 #+title: Henke Larsson AB
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-bigblow.setup
 
+* How to setup a minor mode for my custom CLI wrapper
+Making an optimal workflow by wrapping common CLI tools in a transient.
+#+begin_src emacs-lisp
+;; Example what args will look like ("--switch" "--text=WHAT is this text")
+(defun lslha (&optional args)
+  "Observe hows arg can be passed directly as a list to subpocess making it easy to expand with more option without changing function."
+  (interactive
+   (list (transient-args 'service-x-transient)))
+  (let ((process "*my-process*")
+	(buffer "*customer*"))
+    (if (member "--switch" args)
+	(let ((thing (thing-at-point 'word t)))
+	  (apply #'start-process process buffer "ls" "-lha" thing args))
+      (apply #'call-process "ls" nil buffer nil "-lha" args))
+    (switch-to-buffer buffer)))
+(defun test-function (&optional args)
+  (interactive
+   (list (transient-args 'service-x-transient)))
+  (message "TEST"))
 
-* Hello
-* Smoj
+(require 'transient)
+(transient-define-infix service:--text ()
+  :description "Option with text"
+  :class 'transient-option
+  :argument "--text="
+  :shortarg "-i"
+  )
+(transient-define-infix service:--list ()
+  :description "Option with list"
+  :class 'transient-option
+  :shortarg "-l"
+  :argument "--list="
+  :choices '("true" "false" "bit-true" "bit-false" "in-between"))
+(transient-define-prefix service-x-transient ()
+  "Test Transient."
+  :info-manual "Tansient for service x"
+  ["Arguments"
+   ("-s" "Use thing at point" "--switch")
+   (service:--text)
+   (service:--list)]
+  ["Actions"
+   ("a" "Call lslha" lslha)
+   ("t" "Transient 2" test-function)
+   ("d" "Action d" test-function)]
+  [("q" "Quit" transient-quit-one)])
+;; Special mode allowes me to quit using q
+(define-derived-mode customer-mode special-mode "Customer"
+  "Major mode for custom CLI wrappers."
+  (with-current-buffer (get-buffer-create "*customer*")
+    (goto-char (point-max))
+    (insert "* Welcome to Customer mode\n")))
 
-Here is a [[./emacs.org][link]]
+(define-minor-mode customer-minor-mode
+  "Minor mode for interactiong with my CLI tools"
+  :lighter " Cutomer"
+  :keymap (let ((map (make-sparse-keymap)))
+	    (define-key map (kbd "C-c m") 'service-x-transient)
+	    map))
+
+(defun customer ()
+  (interactive)
+  (switch-to-buffer "*customer*")
+  (org-mode)
+  (customer-minor-mode)
+  (goto-char (point-max))
+  (insert "* Welcome to Customer mode\n\n"))
+
+(defvar customer-mode-map
+  "Emacs will assume the name <mode>-map."
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "l") 'service-x-transient)
+    map))
+#+end_src
