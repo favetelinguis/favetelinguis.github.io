@@ -49,12 +49,6 @@ Making an optimal workflow by wrapping common CLI tools in a transient.
    ("t" "Transient 2" test-function)
    ("d" "Action d" test-function)]
   [("q" "Quit" transient-quit-one)])
-;; Special mode allowes me to quit using q
-(define-derived-mode customer-mode special-mode "Customer"
-  "Major mode for custom CLI wrappers."
-  (with-current-buffer (get-buffer-create "*customer*")
-    (goto-char (point-max))
-    (insert "* Welcome to Customer mode\n")))
 
 (define-minor-mode customer-minor-mode
   "Minor mode for interactiong with my CLI tools"
@@ -70,10 +64,4 @@ Making an optimal workflow by wrapping common CLI tools in a transient.
   (customer-minor-mode)
   (goto-char (point-max))
   (insert "* Welcome to Customer mode\n\n"))
-
-(defvar customer-mode-map
-  "Emacs will assume the name <mode>-map."
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "l") 'service-x-transient)
-    map))
 #+end_src
