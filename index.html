@@ -26,35 +26,35 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org5b92ba6">About</a>
+<li><a href="#orgb58e1f6">About</a>
 <ul>
-<li><a href="#org9a88a81">We are a consultancy company that <b>loves</b> to build software, your can contact us at <code>t1 at henkelarsson dot se</code>.</a></li>
+<li><a href="#org413ffe8">We are a consultancy company that <b>loves</b> to build software, your can contact us at <code>t1 at henkelarsson dot se</code>.</a></li>
 </ul>
 </li>
-<li><a href="#org41207ad">Wiki</a>
+<li><a href="#orga364ac3">Wiki</a>
 <ul>
-<li><a href="#orgb05d09e">How to setup a minor mode for my custom CLI wrapper</a></li>
+<li><a href="#org1d865c6">How to setup a minor mode for my custom CLI wrapper</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org5b92ba6" class="outline-2">
-<h2 id="org5b92ba6">About</h2>
-<div class="outline-text-2" id="text-org5b92ba6">
+<div id="outline-container-orgb58e1f6" class="outline-2">
+<h2 id="orgb58e1f6">About</h2>
+<div class="outline-text-2" id="text-orgb58e1f6">
 </div>
-<div id="outline-container-org9a88a81" class="outline-3">
-<h3 id="org9a88a81">We are a consultancy company that <b>loves</b> to build software, your can contact us at <code>t1 at henkelarsson dot se</code>.</h3>
+<div id="outline-container-org413ffe8" class="outline-3">
+<h3 id="org413ffe8">We are a consultancy company that <b>loves</b> to build software, your can contact us at <code>t1 at henkelarsson dot se</code>.</h3>
 </div>
 </div>
-<div id="outline-container-org41207ad" class="outline-2">
-<h2 id="org41207ad">Wiki</h2>
-<div class="outline-text-2" id="text-org41207ad">
+<div id="outline-container-orga364ac3" class="outline-2">
+<h2 id="orga364ac3">Wiki</h2>
+<div class="outline-text-2" id="text-orga364ac3">
 </div>
-<div id="outline-container-orgb05d09e" class="outline-3">
-<h3 id="orgb05d09e">How to setup a minor mode for my custom CLI wrapper</h3>
-<div class="outline-text-3" id="text-orgb05d09e">
+<div id="outline-container-org1d865c6" class="outline-3">
+<h3 id="org1d865c6">How to setup a minor mode for my custom CLI wrapper</h3>
+<div class="outline-text-3" id="text-org1d865c6">
 <p>
 Making an optimal workflow by wrapping common CLI tools in a transient.
 </p>
@@ -101,12 +101,6 @@ Making an optimal workflow by wrapping common CLI tools in a transient.
    (<span style="font-style: italic;">"t"</span> <span style="font-style: italic;">"Transient 2"</span> test-function)
    (<span style="font-style: italic;">"d"</span> <span style="font-style: italic;">"Action d"</span> test-function)]
   [(<span style="font-style: italic;">"q"</span> <span style="font-style: italic;">"Quit"</span> transient-quit-one)])
-<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">Special mode allowes me to quit using q</span>
-(<span style="font-weight: bold;">define-derived-mode</span> <span style="font-weight: bold;">customer-mode</span> special-mode <span style="font-style: italic;">"Customer"</span>
-  <span style="font-style: italic;">"Major mode for custom CLI wrappers."</span>
-  (<span style="font-weight: bold;">with-current-buffer</span> (get-buffer-create <span style="font-style: italic;">"*customer*"</span>)
-    (goto-char (point-max))
-    (insert <span style="font-style: italic;">"* Welcome to Customer mode\n"</span>)))
 
 (<span style="font-weight: bold;">define-minor-mode</span> <span style="font-weight: bold;">customer-minor-mode</span>
   <span style="font-style: italic;">"Minor mode for interactiong with my CLI tools"</span>
@@ -122,12 +116,6 @@ Making an optimal workflow by wrapping common CLI tools in a transient.
   (customer-minor-mode)
   (goto-char (point-max))
   (insert <span style="font-style: italic;">"* Welcome to Customer mode\n\n"</span>))
-
-(<span style="font-weight: bold;">defvar</span> <span style="font-weight: bold; font-style: italic;">customer-mode-map</span>
-  <span style="font-style: italic;">"Emacs will assume the name &lt;mode&gt;-map."</span>
-  (<span style="font-weight: bold;">let</span> ((map (make-sparse-keymap)))
-    (define-key map (kbd <span style="font-style: italic;">"l"</span>) 'service-x-transient)
-    map))
 </pre>
 </div>
 </div>
