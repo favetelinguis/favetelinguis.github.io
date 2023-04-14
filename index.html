@@ -26,22 +26,89 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge3852d2">Hello</a></li>
-<li><a href="#org205fe78">Smoj</a></li>
+<li><a href="#org84bf04e">How to setup a minor mode for my custom CLI wrapper</a></li>
 </ul>
 </div>
 </div>
 
-
-<div id="outline-container-orge3852d2" class="outline-2">
-<h2 id="orge3852d2">Hello</h2>
-</div>
-<div id="outline-container-org205fe78" class="outline-2">
-<h2 id="org205fe78">Smoj</h2>
-<div class="outline-text-2" id="text-org205fe78">
+<div id="outline-container-org84bf04e" class="outline-2">
+<h2 id="org84bf04e">How to setup a minor mode for my custom CLI wrapper</h2>
+<div class="outline-text-2" id="text-org84bf04e">
 <p>
-Here is a <a href="./emacs.html">link</a>
+Making an optimal workflow by wrapping common CLI tools in a transient.
 </p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">Example what args will look like ("--switch" "--text=WHAT is this text")</span>
+(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">lslha</span> (<span style="font-weight: bold; text-decoration: underline;">&amp;optional</span> args)
+  <span style="font-style: italic;">"Observe hows arg can be passed directly as a list to subpocess making it easy to expand with more option without changing function."</span>
+  (<span style="font-weight: bold;">interactive</span>
+   (list (transient-args 'service-x-transient)))
+  (<span style="font-weight: bold;">let</span> ((process <span style="font-style: italic;">"*my-process*"</span>)
+        (buffer <span style="font-style: italic;">"*customer*"</span>))
+    (<span style="font-weight: bold;">if</span> (member <span style="font-style: italic;">"--switch"</span> args)
+        (<span style="font-weight: bold;">let</span> ((thing (thing-at-point 'word t)))
+          (apply #'start-process process buffer <span style="font-style: italic;">"ls"</span> <span style="font-style: italic;">"-lha"</span> thing args))
+      (apply #'call-process <span style="font-style: italic;">"ls"</span> nil buffer nil <span style="font-style: italic;">"-lha"</span> args))
+    (switch-to-buffer buffer)))
+(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">test-function</span> (<span style="font-weight: bold; text-decoration: underline;">&amp;optional</span> args)
+  (<span style="font-weight: bold;">interactive</span>
+   (list (transient-args 'service-x-transient)))
+  (message <span style="font-style: italic;">"TEST"</span>))
+
+(<span style="font-weight: bold;">require</span> '<span style="font-weight: bold; text-decoration: underline;">transient</span>)
+(transient-define-infix service:--text ()
+  <span style="font-weight: bold;">:description</span> <span style="font-style: italic;">"Option with text"</span>
+  <span style="font-weight: bold;">:class</span> 'transient-option
+  <span style="font-weight: bold;">:argument</span> <span style="font-style: italic;">"--text="</span>
+  <span style="font-weight: bold;">:shortarg</span> <span style="font-style: italic;">"-i"</span>
+  )
+(transient-define-infix service:--list ()
+  <span style="font-weight: bold;">:description</span> <span style="font-style: italic;">"Option with list"</span>
+  <span style="font-weight: bold;">:class</span> 'transient-option
+  <span style="font-weight: bold;">:shortarg</span> <span style="font-style: italic;">"-l"</span>
+  <span style="font-weight: bold;">:argument</span> <span style="font-style: italic;">"--list="</span>
+  <span style="font-weight: bold;">:choices</span> '(<span style="font-style: italic;">"true"</span> <span style="font-style: italic;">"false"</span> <span style="font-style: italic;">"bit-true"</span> <span style="font-style: italic;">"bit-false"</span> <span style="font-style: italic;">"in-between"</span>))
+(transient-define-prefix service-x-transient ()
+  <span style="font-style: italic;">"Test Transient."</span>
+  <span style="font-weight: bold;">:info-manual</span> <span style="font-style: italic;">"Tansient for service x"</span>
+  [<span style="font-style: italic;">"Arguments"</span>
+   (<span style="font-style: italic;">"-s"</span> <span style="font-style: italic;">"Use thing at point"</span> <span style="font-style: italic;">"--switch"</span>)
+   (service:--text)
+   (service:--list)]
+  [<span style="font-style: italic;">"Actions"</span>
+   (<span style="font-style: italic;">"a"</span> <span style="font-style: italic;">"Call lslha"</span> lslha)
+   (<span style="font-style: italic;">"t"</span> <span style="font-style: italic;">"Transient 2"</span> test-function)
+   (<span style="font-style: italic;">"d"</span> <span style="font-style: italic;">"Action d"</span> test-function)]
+  [(<span style="font-style: italic;">"q"</span> <span style="font-style: italic;">"Quit"</span> transient-quit-one)])
+<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">Special mode allowes me to quit using q</span>
+(<span style="font-weight: bold;">define-derived-mode</span> <span style="font-weight: bold;">customer-mode</span> special-mode <span style="font-style: italic;">"Customer"</span>
+  <span style="font-style: italic;">"Major mode for custom CLI wrappers."</span>
+  (<span style="font-weight: bold;">with-current-buffer</span> (get-buffer-create <span style="font-style: italic;">"*customer*"</span>)
+    (goto-char (point-max))
+    (insert <span style="font-style: italic;">"* Welcome to Customer mode\n"</span>)))
+
+(<span style="font-weight: bold;">define-minor-mode</span> <span style="font-weight: bold;">customer-minor-mode</span>
+  <span style="font-style: italic;">"Minor mode for interactiong with my CLI tools"</span>
+  <span style="font-weight: bold;">:lighter</span> <span style="font-style: italic;">" Cutomer"</span>
+  <span style="font-weight: bold;">:keymap</span> (<span style="font-weight: bold;">let</span> ((map (make-sparse-keymap)))
+            (define-key map (kbd <span style="font-style: italic;">"C-c m"</span>) 'service-x-transient)
+            map))
+
+(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">customer</span> ()
+  (<span style="font-weight: bold;">interactive</span>)
+  (switch-to-buffer <span style="font-style: italic;">"*customer*"</span>)
+  (org-mode)
+  (customer-minor-mode)
+  (goto-char (point-max))
+  (insert <span style="font-style: italic;">"* Welcome to Customer mode\n\n"</span>))
+
+(<span style="font-weight: bold;">defvar</span> <span style="font-weight: bold; font-style: italic;">customer-mode-map</span>
+  <span style="font-style: italic;">"Emacs will assume the name &lt;mode&gt;-map."</span>
+  (<span style="font-weight: bold;">let</span> ((map (make-sparse-keymap)))
+    (define-key map (kbd <span style="font-style: italic;">"l"</span>) 'service-x-transient)
+    map))
+</pre>
+</div>
 </div>
 </div>
 </div>
