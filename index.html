@@ -26,37 +26,38 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org699f7b3">About</a>
+<li><a href="#org763bd67">About</a>
 <ul>
-<li><a href="#orgfc5da07">We are a consultancy company that <b>loves</b> to build software, your can contact us at <code>t1 at henkelarsson dot se</code>.</a></li>
+<li><a href="#org012f082">We are a consultancy company that <b>loves</b> to build software, your can contact us at <code>t1 at henkelarsson dot se</code>.</a></li>
 </ul>
 </li>
-<li><a href="#orgc06bb9f">Wiki</a>
+<li><a href="#org389ba98">Wiki</a>
 <ul>
-<li><a href="#org074f9f6">How to setup a minor mode for my custom CLI wrapper</a></li>
+<li><a href="#org60d5fac">How to setup a minor mode for my custom CLI wrapper</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org699f7b3" class="outline-2">
-<h2 id="org699f7b3">About</h2>
-<div class="outline-text-2" id="text-org699f7b3">
+<div id="outline-container-org763bd67" class="outline-2">
+<h2 id="org763bd67">About</h2>
+<div class="outline-text-2" id="text-org763bd67">
 </div>
-<div id="outline-container-orgfc5da07" class="outline-3">
-<h3 id="orgfc5da07">We are a consultancy company that <b>loves</b> to build software, your can contact us at <code>t1 at henkelarsson dot se</code>.</h3>
+<div id="outline-container-org012f082" class="outline-3">
+<h3 id="org012f082">We are a consultancy company that <b>loves</b> to build software, your can contact us at <code>t1 at henkelarsson dot se</code>.</h3>
 </div>
 </div>
-<div id="outline-container-orgc06bb9f" class="outline-2">
-<h2 id="orgc06bb9f">Wiki</h2>
-<div class="outline-text-2" id="text-orgc06bb9f">
+<div id="outline-container-org389ba98" class="outline-2">
+<h2 id="org389ba98">Wiki</h2>
+<div class="outline-text-2" id="text-org389ba98">
 </div>
-<div id="outline-container-org074f9f6" class="outline-3">
-<h3 id="org074f9f6">How to setup a minor mode for my custom CLI wrapper</h3>
-<div class="outline-text-3" id="text-org074f9f6">
+<div id="outline-container-org60d5fac" class="outline-3">
+<h3 id="org60d5fac">How to setup a minor mode for my custom CLI wrapper</h3>
+<div class="outline-text-3" id="text-org60d5fac">
 <p>
 Making an optimal workflow by wrapping common CLI tools in a transient.
+To have this work nice with my Emacs config put this in <code>~/repos/customer/customer-mode.el</code>
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">Example what args will look like ("--switch" "--text=WHAT is this text")</span>
@@ -124,21 +125,23 @@ Making an optimal workflow by wrapping common CLI tools in a transient.
 Then create a babashka script at <code>~/repos/bab/script.clj</code> with something like.
 </p>
 <div class="org-src-container">
-<pre class="src src-clojure">#!/usr/bin/env bb
+<pre class="src src-clojure">  #!/usr/bin/env bb
 
-(require '[clojure.tools.cli :refer [parse-opts]])
+  (require '[clojure.tools.cli :refer [parse-opts]])
 
-(def cli-options
-  [["-p" "--port PORT" "Port number"
-    :default 80
-    :parse-fn #(Integer/parseInt %)
-    ]
-   ["-i" "--text TEXT" "Some text input"]
-   ["-t" "--thing THING" "Thing at point"]
-   ["-l" "--list LISP" "Some info from list argument"]
-   ["-h" "--help"]])
+  (def cli-options
+    [["-p" "--port PORT" "Port number"
+      :default 80
+      :parse-fn #(Integer/parseInt %)
+      ]
+     ["-i" "--text TEXT" "Some text input"]
+     ["-t" "--thing THING" "Thing at point"]
+     ["-l" "--list LISP" "Some info from list argument"]
+     ["-h" "--help"]])
 
-(println "** Output\n" (:options (parse-opts *command-line-args* cli-options)))
+  (println "** Output\n" (:options (parse-opts *command-line-args*
+cli-options)))
+(provide 'customer-mode)
 </pre>
 </div>
 </div>
