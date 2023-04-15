@@ -26,35 +26,35 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgb58e1f6">About</a>
+<li><a href="#org699f7b3">About</a>
 <ul>
-<li><a href="#org413ffe8">We are a consultancy company that <b>loves</b> to build software, your can contact us at <code>t1 at henkelarsson dot se</code>.</a></li>
+<li><a href="#orgfc5da07">We are a consultancy company that <b>loves</b> to build software, your can contact us at <code>t1 at henkelarsson dot se</code>.</a></li>
 </ul>
 </li>
-<li><a href="#orga364ac3">Wiki</a>
+<li><a href="#orgc06bb9f">Wiki</a>
 <ul>
-<li><a href="#org1d865c6">How to setup a minor mode for my custom CLI wrapper</a></li>
+<li><a href="#org074f9f6">How to setup a minor mode for my custom CLI wrapper</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgb58e1f6" class="outline-2">
-<h2 id="orgb58e1f6">About</h2>
-<div class="outline-text-2" id="text-orgb58e1f6">
+<div id="outline-container-org699f7b3" class="outline-2">
+<h2 id="org699f7b3">About</h2>
+<div class="outline-text-2" id="text-org699f7b3">
 </div>
-<div id="outline-container-org413ffe8" class="outline-3">
-<h3 id="org413ffe8">We are a consultancy company that <b>loves</b> to build software, your can contact us at <code>t1 at henkelarsson dot se</code>.</h3>
+<div id="outline-container-orgfc5da07" class="outline-3">
+<h3 id="orgfc5da07">We are a consultancy company that <b>loves</b> to build software, your can contact us at <code>t1 at henkelarsson dot se</code>.</h3>
 </div>
 </div>
-<div id="outline-container-orga364ac3" class="outline-2">
-<h2 id="orga364ac3">Wiki</h2>
-<div class="outline-text-2" id="text-orga364ac3">
+<div id="outline-container-orgc06bb9f" class="outline-2">
+<h2 id="orgc06bb9f">Wiki</h2>
+<div class="outline-text-2" id="text-orgc06bb9f">
 </div>
-<div id="outline-container-org1d865c6" class="outline-3">
-<h3 id="org1d865c6">How to setup a minor mode for my custom CLI wrapper</h3>
-<div class="outline-text-3" id="text-org1d865c6">
+<div id="outline-container-org074f9f6" class="outline-3">
+<h3 id="org074f9f6">How to setup a minor mode for my custom CLI wrapper</h3>
+<div class="outline-text-3" id="text-org074f9f6">
 <p>
 Making an optimal workflow by wrapping common CLI tools in a transient.
 </p>
@@ -68,9 +68,10 @@ Making an optimal workflow by wrapping common CLI tools in a transient.
         (buffer <span style="font-style: italic;">"*customer*"</span>))
     (<span style="font-weight: bold;">if</span> (member <span style="font-style: italic;">"--switch"</span> args)
         (<span style="font-weight: bold;">let</span> ((thing (thing-at-point 'word t)))
-          (apply #'start-process process buffer <span style="font-style: italic;">"ls"</span> <span style="font-style: italic;">"-lha"</span> thing args))
-      (apply #'call-process <span style="font-style: italic;">"ls"</span> nil buffer nil <span style="font-style: italic;">"-lha"</span> args))
+          (apply #'start-process process buffer <span style="font-style: italic;">"bb"</span> <span style="font-style: italic;">"-f"</span> (expand-file-name <span style="font-style: italic;">"~/repos/bab/script.clj"</span>) <span style="font-style: italic;">"-t"</span> thing args))
+      (apply #'call-process <span style="font-style: italic;">"bb"</span> nil buffer nil <span style="font-style: italic;">"-f"</span> (expand-file-name <span style="font-style: italic;">"~/repos/bab/script.clj"</span>) args))
     (switch-to-buffer buffer)))
+
 (<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">test-function</span> (<span style="font-weight: bold; text-decoration: underline;">&amp;optional</span> args)
   (<span style="font-weight: bold;">interactive</span>
    (list (transient-args 'service-x-transient)))
@@ -115,7 +116,29 @@ Making an optimal workflow by wrapping common CLI tools in a transient.
   (org-mode)
   (customer-minor-mode)
   (goto-char (point-max))
-  (insert <span style="font-style: italic;">"* Welcome to Customer mode\n\n"</span>))
+  (insert <span style="font-style: italic;">"* Welcome to Customer mode @ "</span> (current-time-string) <span style="font-style: italic;">"\n\n"</span>))
+</pre>
+</div>
+
+<p>
+Then create a babashka script at <code>~/repos/bab/script.clj</code> with something like.
+</p>
+<div class="org-src-container">
+<pre class="src src-clojure">#!/usr/bin/env bb
+
+(require '[clojure.tools.cli :refer [parse-opts]])
+
+(def cli-options
+  [["-p" "--port PORT" "Port number"
+    :default 80
+    :parse-fn #(Integer/parseInt %)
+    ]
+   ["-i" "--text TEXT" "Some text input"]
+   ["-t" "--thing THING" "Thing at point"]
+   ["-l" "--list LISP" "Some info from list argument"]
+   ["-h" "--help"]])
+
+(println "** Output\n" (:options (parse-opts *command-line-args* cli-options)))
 </pre>
 </div>
 </div>
