@@ -7,6 +7,7 @@
 * Wiki
 ** How to setup a minor mode for my custom CLI wrapper
 Making an optimal workflow by wrapping common CLI tools in a transient.
+To have this work nice with my Emacs config put this in =~/repos/customer/customer-mode.el=
 #+begin_src emacs-lisp :results silent
   ;; Example what args will look like ("--switch" "--text=WHAT is this text")
   (defun lslha (&optional args)
@@ -84,5 +85,7 @@ Then create a babashka script at ~~/repos/bab/script.clj~ with something like.
      ["-l" "--list LISP" "Some info from list argument"]
      ["-h" "--help"]])
 
-  (println "** Output\n" (:options (parse-opts *command-line-args* cli-options)))
+  (println "** Output\n" (:options (parse-opts *command-line-args*
+cli-options)))
+(provide 'customer-mode)
 #+end_src
