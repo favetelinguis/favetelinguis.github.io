@@ -6,150 +6,53 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Henke Larsson AB</title>
-<meta name="generator" content="Org mode" />
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/bigblow_theme/css/htmlize.css"/>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/bigblow_theme/css/bigblow.css"/>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/bigblow_theme/css/hideshow.css"/>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/bigblow_theme/js/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/bigblow_theme/js/jquery-ui-1.10.2.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/bigblow_theme/js/jquery.localscroll-min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/bigblow_theme/js/jquery.scrollTo-1.4.3.1-min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/bigblow_theme/js/jquery.zclip.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/bigblow_theme/js/bigblow.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/bigblow_theme/js/hideshow.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<meta name="generator" content="Org Mode" />
 </head>
 <body>
-<div id="content">
+<div id="content" class="content">
 <h1 class="title">Henke Larsson AB</h1>
-<div id="table-of-contents">
+<div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
-<div id="text-table-of-contents">
+<div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org763bd67">About</a>
+<li><a href="#org49e5a5d">About</a>
 <ul>
-<li><a href="#org012f082">We are a consultancy company that <b>loves</b> to build software, your can contact us at <code>t1 at henkelarsson dot se</code>.</a></li>
+<li><a href="#org40c8ddc">Writing about things I am currentry working on as a way to remember.</a></li>
 </ul>
 </li>
-<li><a href="#org389ba98">Wiki</a>
+<li><a href="#org7b0a79d">Wiki</a>
 <ul>
-<li><a href="#org60d5fac">How to setup a minor mode for my custom CLI wrapper</a></li>
+<li><a href="#orgd0b6140">Test</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org763bd67" class="outline-2">
-<h2 id="org763bd67">About</h2>
-<div class="outline-text-2" id="text-org763bd67">
+<div id="outline-container-org49e5a5d" class="outline-2">
+<h2 id="org49e5a5d">About</h2>
+<div class="outline-text-2" id="text-org49e5a5d">
 </div>
-<div id="outline-container-org012f082" class="outline-3">
-<h3 id="org012f082">We are a consultancy company that <b>loves</b> to build software, your can contact us at <code>t1 at henkelarsson dot se</code>.</h3>
+<div id="outline-container-org40c8ddc" class="outline-3">
+<h3 id="org40c8ddc">Writing about things I am currentry working on as a way to remember.</h3>
 </div>
 </div>
-<div id="outline-container-org389ba98" class="outline-2">
-<h2 id="org389ba98">Wiki</h2>
-<div class="outline-text-2" id="text-org389ba98">
+<div id="outline-container-org7b0a79d" class="outline-2">
+<h2 id="org7b0a79d">Wiki</h2>
+<div class="outline-text-2" id="text-org7b0a79d">
 </div>
-<div id="outline-container-org60d5fac" class="outline-3">
-<h3 id="org60d5fac">How to setup a minor mode for my custom CLI wrapper</h3>
-<div class="outline-text-3" id="text-org60d5fac">
+<div id="outline-container-orgd0b6140" class="outline-3">
+<h3 id="orgd0b6140">Test</h3>
+<div class="outline-text-3" id="text-orgd0b6140">
 <p>
-Making an optimal workflow by wrapping common CLI tools in a transient.
-To have this work nice with my Emacs config put this in <code>~/repos/customer/customer-mode.el</code>
+How should i structure this?
 </p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">Example what args will look like ("--switch" "--text=WHAT is this text")</span>
-(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">lslha</span> (<span style="font-weight: bold; text-decoration: underline;">&amp;optional</span> args)
-  <span style="font-style: italic;">"Observe hows arg can be passed directly as a list to subpocess making it easy to expand with more option without changing function."</span>
-  (<span style="font-weight: bold;">interactive</span>
-   (list (transient-args 'service-x-transient)))
-  (<span style="font-weight: bold;">let</span> ((process <span style="font-style: italic;">"*my-process*"</span>)
-        (buffer <span style="font-style: italic;">"*customer*"</span>))
-    (<span style="font-weight: bold;">if</span> (member <span style="font-style: italic;">"--switch"</span> args)
-        (<span style="font-weight: bold;">let</span> ((thing (thing-at-point 'word t)))
-          (apply #'start-process process buffer <span style="font-style: italic;">"bb"</span> <span style="font-style: italic;">"-f"</span> (expand-file-name <span style="font-style: italic;">"~/repos/bab/script.clj"</span>) <span style="font-style: italic;">"-t"</span> thing args))
-      (apply #'call-process <span style="font-style: italic;">"bb"</span> nil buffer nil <span style="font-style: italic;">"-f"</span> (expand-file-name <span style="font-style: italic;">"~/repos/bab/script.clj"</span>) args))
-    (switch-to-buffer buffer)))
-
-(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">test-function</span> (<span style="font-weight: bold; text-decoration: underline;">&amp;optional</span> args)
-  (<span style="font-weight: bold;">interactive</span>
-   (list (transient-args 'service-x-transient)))
-  (message <span style="font-style: italic;">"TEST"</span>))
-
-(<span style="font-weight: bold;">require</span> '<span style="font-weight: bold; text-decoration: underline;">transient</span>)
-(transient-define-infix service:--text ()
-  <span style="font-weight: bold;">:description</span> <span style="font-style: italic;">"Option with text"</span>
-  <span style="font-weight: bold;">:class</span> 'transient-option
-  <span style="font-weight: bold;">:argument</span> <span style="font-style: italic;">"--text="</span>
-  <span style="font-weight: bold;">:shortarg</span> <span style="font-style: italic;">"-i"</span>
-  )
-(transient-define-infix service:--list ()
-  <span style="font-weight: bold;">:description</span> <span style="font-style: italic;">"Option with list"</span>
-  <span style="font-weight: bold;">:class</span> 'transient-option
-  <span style="font-weight: bold;">:shortarg</span> <span style="font-style: italic;">"-l"</span>
-  <span style="font-weight: bold;">:argument</span> <span style="font-style: italic;">"--list="</span>
-  <span style="font-weight: bold;">:choices</span> '(<span style="font-style: italic;">"true"</span> <span style="font-style: italic;">"false"</span> <span style="font-style: italic;">"bit-true"</span> <span style="font-style: italic;">"bit-false"</span> <span style="font-style: italic;">"in-between"</span>))
-(transient-define-prefix service-x-transient ()
-  <span style="font-style: italic;">"Test Transient."</span>
-  <span style="font-weight: bold;">:info-manual</span> <span style="font-style: italic;">"Tansient for service x"</span>
-  [<span style="font-style: italic;">"Arguments"</span>
-   (<span style="font-style: italic;">"-s"</span> <span style="font-style: italic;">"Use thing at point"</span> <span style="font-style: italic;">"--switch"</span>)
-   (service:--text)
-   (service:--list)]
-  [<span style="font-style: italic;">"Actions"</span>
-   (<span style="font-style: italic;">"a"</span> <span style="font-style: italic;">"Call lslha"</span> lslha)
-   (<span style="font-style: italic;">"t"</span> <span style="font-style: italic;">"Transient 2"</span> test-function)
-   (<span style="font-style: italic;">"d"</span> <span style="font-style: italic;">"Action d"</span> test-function)]
-  [(<span style="font-style: italic;">"q"</span> <span style="font-style: italic;">"Quit"</span> transient-quit-one)])
-
-(<span style="font-weight: bold;">define-minor-mode</span> <span style="font-weight: bold;">customer-minor-mode</span>
-  <span style="font-style: italic;">"Minor mode for interactiong with my CLI tools"</span>
-  <span style="font-weight: bold;">:lighter</span> <span style="font-style: italic;">" Cutomer"</span>
-  <span style="font-weight: bold;">:keymap</span> (<span style="font-weight: bold;">let</span> ((map (make-sparse-keymap)))
-            (define-key map (kbd <span style="font-style: italic;">"C-c m"</span>) 'service-x-transient)
-            map))
-
-(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">customer</span> ()
-  (<span style="font-weight: bold;">interactive</span>)
-  (switch-to-buffer <span style="font-style: italic;">"*customer*"</span>)
-  (org-mode)
-  (customer-minor-mode)
-  (goto-char (point-max))
-  (insert <span style="font-style: italic;">"* Welcome to Customer mode @ "</span> (current-time-string) <span style="font-style: italic;">"\n\n"</span>))
-</pre>
-</div>
-
-<p>
-Then create a babashka script at <code>~/repos/bab/script.clj</code> with something like.
-</p>
-<div class="org-src-container">
-<pre class="src src-clojure">  #!/usr/bin/env bb
-
-  (require '[clojure.tools.cli :refer [parse-opts]])
-
-  (def cli-options
-    [["-p" "--port PORT" "Port number"
-      :default 80
-      :parse-fn #(Integer/parseInt %)
-      ]
-     ["-i" "--text TEXT" "Some text input"]
-     ["-t" "--thing THING" "Thing at point"]
-     ["-l" "--list LISP" "Some info from list argument"]
-     ["-h" "--help"]])
-
-  (println "** Output\n" (:options (parse-opts *command-line-args*
-cli-options)))
-(provide 'customer-mode)
-</pre>
-</div>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.3)</p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.3 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</p>
 </div>
 </body>
 </html>
