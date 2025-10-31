@@ -2,8 +2,46 @@
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-bigblow.setup
 #+RESULTS: silent
 
-* About
-** Writing about things I am currentry working on as a way to remember.
-* Wiki
-** Test
-How should i structure this?
+* Static vs dynamic arrays, C vs Zig arrays
+- arrays are static or dynamic and they always have memory adjectent layout which allow us to use a pointer + offset strategy to acces them
+- linked list do not need linear memory show impl in zig and c
+- hashmap impl show impl in zig and c
+
+  #+BEGIN_SRC c
+    #include <stdio.h>
+    int main() {
+        printf("Hello, World!\n");
+        return 0;
+    }
+   #+END_SRC
+   
+  #+BEGIN_SRC zig
+    const std = @import("std");
+    pub fn main() void {
+        std.debug.print("Hello, World!\n", .{});
+    }
+   #+END_SRC
+
+* Sorry about the spelling will setup spellchecking for org mode but right now just playing around.
+
+* Tools I use for private
+This is things I like for private use, I do not make any claims of what are best in an enterprise setting. When making choices for an enterprice there are so many additional things that come in then selecteing just the right tool for the job.
+
+** Things I keep coming back to so they
+Here are things that I keep coming back to, this is things I compare all other things to since they are really what I consider the best for me
+- [[https://clojure.org/][Clojure]]
+- [[https://www.gnu.org/software/emacs/][Emacs]]
+- [[https://nixos.org/][NixOS]]
+- [[https://blog.stenmans.org/theBeamBook/][BEAM]] 
+- [[https://elm-lang.org/][Elm]] 
+
+** Developer setup
+- [[https://levus.co/][Levus]]
+- [[https://www.zsa.io/voyager][ZSA Voyager]]
+
+** Recent things that has might fit in the list above
+- [[https://odin-lang.org/][Odin]]
+  After trying some of the hyped systems level programming langauges like Zig, Jai, Rust, C3, Nim. Odin is the one that makes me feel the same when I do systems level programming as Clojure makes me feel when I do random exploratory stuff. It is a Joy to program in but has not used it long enogh to know if I will keep coming back to it or if I will move on.
+** Projects that interest me
+- [[https://www.roc-lang.org/][Roc]]
+  Not really formed an opinion but it can be cool one day.
